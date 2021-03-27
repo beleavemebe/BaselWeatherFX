@@ -19,12 +19,12 @@ public class Calculator {
                 .append(getLatestDate())
                 .append("\n\n");
         sb.append("Средние значения:\n");
-        sb.append("     Средняя температура воздуха    ").append(String.format("%.2f", getAverageTemperature())).append(" °C\n");
+        sb.append("     Средняя температура воздуха    ").append(String.format("%.1f", getAverageTemperature())).append(" °C\n");
         sb.append("     Средняя влажность воздуха      ").append(String.format("%.2f", getAverageHumidity())).append(" %\n");
-        sb.append("     Средняя скороcть ветра         ").append(String.format("%.2f",getAverageWindSpeed())).append(" км/ч\n\n");
-        sb.append("Час наибольшей температуры          ").append(getDateWithHighestTemperature()).append("\n");
-        sb.append("Самая низкая влажность              ").append(getLowestHumidity()).append(" %\n");
-        sb.append("Самый сильный ветер                 ").append(String.format("%.2f",getGreatestWindSpeed())).append(" км/ч\n");
+        sb.append("     Средняя скороcть ветра         ").append(String.format("%.1f",getAverageWindSpeed())).append(" км/ч\n\n");
+        sb.append("Самая высокая температура           ").append(getHighestTemperature()).append("\n");
+        sb.append("Самая низкая влажность              ").append(getLowestHumidity()).append("\n");
+        sb.append("Самый сильный ветер                 ").append(getGreatestWindSpeed()).append("\n");
         sb.append("Самое частое направление ветра      ").append(getMostCommonWindDirection()).append("\n");
         return sb.toString();
     }
@@ -50,25 +50,34 @@ public class Calculator {
                 .getAsDouble();
     }
 
-    private Date getDateWithHighestTemperature() {
-        return data.stream()
+    private String getHighestTemperature() {
+        Data d = data.stream()
                 .max((Data d1, Data d2) -> Float.compare(d1.temperature, d2.temperature))
-                .get()
-                .timestamp;
+                .get();
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("%.1f", d.temperature)).append(" °C ");
+        result.append("(").append(d.timestamp).append(")");
+        return result.toString();
     }
 
-    private Double getLowestHumidity() {
-        return data.stream()
+    private String getLowestHumidity() {
+        Data d = data.stream()
                 .min((Data d1, Data d2) -> Double.compare(d1.relativeHumidity, d2.relativeHumidity))
-                .get()
-                .relativeHumidity;
+                .get();
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("%.2f", d.relativeHumidity)).append(" % ");
+        result.append("(").append(d.timestamp).append(")");
+        return result.toString();
     }
 
-    private Float getGreatestWindSpeed() {
-        return data.stream()
+    private String getGreatestWindSpeed() {
+        Data d = data.stream()
                 .max((Data d1, Data d2) -> Float.compare(d1.windSpeed, d2.windSpeed))
-                .get()
-                .windSpeed;
+                .get();
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("%.1f", d.windSpeed)).append(" км/ч ");
+        result.append("(").append(d.timestamp).append(")");
+        return result.toString();
     }
 
     private String getMostCommonWindDirection() {

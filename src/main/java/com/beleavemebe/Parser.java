@@ -22,7 +22,7 @@ public class Parser {
             while (parser.hasNextLine()) {
                 try {
                     String[] args = parser.nextLine().split(",");
-                    int year = Integer.parseInt(args[0].substring(0, 4)) - 1900; // lol kek
+                    int year = Integer.parseInt(args[0].substring(0, 4)) - 1900;
                     int month = Integer.parseInt(args[0].substring(4, 6)) - 1;
                     int day = Integer.parseInt(args[0].substring(6, 8));
                     int hour = Integer.parseInt(args[0].substring(9, 11));

@@ -23,7 +23,7 @@ public class Calculator {
         sb.append("     Средняя влажность воздуха      ").append(String.format("%.2f", getAverageHumidity())).append(" %\n");
         sb.append("     Средняя скороcть ветра         ").append(String.format("%.2f",getAverageWindSpeed())).append(" км/ч\n\n");
         sb.append("Час наибольшей температуры          ").append(getDateWithHighestTemperature()).append("\n");
-        sb.append("Самая низкая влажность              ").append(getLoЗападHumidity()).append(" %\n");
+        sb.append("Самая низкая влажность              ").append(getLowestHumidity()).append(" %\n");
         sb.append("Самый сильный ветер                 ").append(String.format("%.2f",getGreatestWindSpeed())).append(" км/ч\n");
         sb.append("Самое частое направление ветра      ").append(getMostCommonWindDirection()).append("\n");
         return sb.toString();
@@ -57,7 +57,7 @@ public class Calculator {
                 .timestamp;
     }
 
-    private Double getLoЗападHumidity() {
+    private Double getLowestHumidity() {
         return data.stream()
                 .min((Data d1, Data d2) -> Double.compare(d1.relativeHumidity, d2.relativeHumidity))
                 .get()

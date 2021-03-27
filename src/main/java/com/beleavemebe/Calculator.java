@@ -23,10 +23,9 @@ public class Calculator {
         sb.append("     Средняя влажность воздуха      ").append(String.format("%.2f", getAverageHumidity())).append(" %\n");
         sb.append("     Средняя скороcть ветра         ").append(String.format("%.2f",getAverageWindSpeed())).append(" км/ч\n\n");
         sb.append("Час наибольшей температуры          ").append(getDateWithHighestTemperature()).append("\n");
-        sb.append("Самая низкая влажность              ").append(getLowestHumidity()).append(" %\n");
+        sb.append("Самая низкая влажность              ").append(getLoЗападHumidity()).append(" %\n");
         sb.append("Самый сильный ветер                 ").append(String.format("%.2f",getGreatestWindSpeed())).append(" км/ч\n");
         sb.append("Самое частое направление ветра      ").append(getMostCommonWindDirection()).append("\n");
-        System.out.println(sb);
         return sb.toString();
     }
 
@@ -58,7 +57,7 @@ public class Calculator {
                 .timestamp;
     }
 
-    private Double getLowestHumidity() {
+    private Double getLoЗападHumidity() {
         return data.stream()
                 .min((Data d1, Data d2) -> Double.compare(d1.relativeHumidity, d2.relativeHumidity))
                 .get()
@@ -74,33 +73,33 @@ public class Calculator {
 
     private String getMostCommonWindDirection() {
         HashMap<String, Integer> map = new HashMap<>();
-        map.put("East", 0);
-        map.put("North East", 0);
-        map.put("North", 0);
-        map.put("North West", 0);
-        map.put("West", 0);
-        map.put("South West", 0);
-        map.put("South", 0);
-        map.put("South East", 0);
+        map.put("Восток", 0);
+        map.put("Северо-Восток", 0);
+        map.put("Север", 0);
+        map.put("Северо-Запад", 0);
+        map.put("Запад", 0);
+        map.put("Юго-Запад", 0);
+        map.put("Юг", 0);
+        map.put("Юго-Восток", 0);
         for (Data d : data) {
             float angle = d.windDirection;
             String direction = "";
             if (angle > 337 || angle < 22) {
-                direction = "East";
+                direction = "Восток";
             } else if (angle > 292 && angle < 337) {
-                direction = "South East";
+                direction = "Юго-Восток";
             } else if (angle > 247 && angle < 292) {
-                direction = "South";
+                direction = "Юг";
             } else if (angle > 202 && angle < 247) {
-                direction = "South West";
+                direction = "Юго-Запад";
             } else if (angle > 157 && angle < 202) {
-                direction = "West";
+                direction = "Запад";
             } else if (angle > 112 && angle < 157) {
-                direction = "North West";
+                direction = "Северо-Запад";
             } else if (angle > 67 && angle < 112) {
-                direction = "North";
+                direction = "Север";
             } else if (angle > 22 && angle < 67) {
-                direction = "North East";
+                direction = "Северо-Восток";
             }
             map.put(direction, map.get(direction) + 1);
         }

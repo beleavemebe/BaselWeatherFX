@@ -42,26 +42,11 @@ public class BaselController {
         update(csv);
     }
 
-    @FXML
-    void showCharts(ActionEvent event) throws Exception {
-        if (data == null || data.size() == 0) {
-            AlertBox.display("", "Сначала загрузите файл");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("charts.fxml"));
-        Parent root = loader.load();
-        ChartsController controller = loader.getController();
-        controller.setData(data);
-
-        Scene scene = new Scene(root);
-
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        Image icon = new Image(new File("charts.png").toURI().toString());
-        stage.getIcons().add(icon);
-        stage.setTitle("Графики");
-        stage.show();
+    void update(File csv) {
+        Parser parser = new Parser(csv);
+        data = parser.getOutput();
+        Calculator calculator = new Calculator(data);
+        text.setText(calculator.formResult());
     }
 
     @FXML
@@ -80,15 +65,30 @@ public class BaselController {
         bufferedWriter.close();
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    @FXML
+    void showCharts(ActionEvent event) throws Exception {
+        if (data == null || data.size() == 0) {
+            AlertBox.display("", "Сначала загрузите файл");
+            return;
+        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("charts.fxml"));
+        Parent root = loader.load();
+        ChartsController controller = loader.getController();
+        controller.setData(data);
+
+        Scene scene = new Scene(root);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Image icon = new Image(new File("src\\main\\java\\com\\beleavemebe\\charts.png").toURI().toString());
+        stage.getIcons().add(icon);
+        stage.setTitle("Графики");
+        stage.show();
     }
 
-    void update(File csv) {
-        Parser parser = new Parser(csv);
-        data = parser.getOutput();
-        Calculator calculator = new Calculator(data);
-        text.setText(calculator.formResult());
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
 }

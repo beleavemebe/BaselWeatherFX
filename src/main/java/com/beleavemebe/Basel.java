@@ -9,11 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
-import java.io.IOException;
 
-/**
- * JavaFX App
- */
 public class Basel extends Application {
 
     public static void main(String[] args) {
@@ -28,7 +24,7 @@ public class Basel extends Application {
             ((BaselController) loader.getController()).setStage(stage);
             Scene scene = new Scene(root);
 
-            Image icon = new Image(new File("Basel.png").toURI().toString());
+            Image icon = new Image(new File("src\\main\\java\\com\\beleavemebe\\Basel.png").toURI().toURL().toString());
             stage.getIcons().add(icon);
             stage.setScene(scene);
             stage.initStyle(StageStyle.DECORATED);
